@@ -11,7 +11,13 @@ import SwiftUI
 struct SwiftUIPathsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+			ContentView()
         }
+		.commands {
+			CommandGroup(replacing: CommandGroupPlacement.pasteboard) {
+				Button("Delete", action: { print("Custom Delete") })
+				.keyboardShortcut(.delete, modifiers: [])
+			}
+		}
     }
 }

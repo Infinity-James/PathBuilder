@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+	@State private var drawing = Drawing()
+	@State internal var flags: NSEvent.ModifierFlags = []
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+		VStack {
+			DrawingView(drawing: $drawing)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
+			ScrollView {
+				Text(drawing.path.code)
+					.multilineTextAlignment(.leading)
+					.padding()
+					.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+			}
+			.frame(height: 150)
+		}
     }
 }
 

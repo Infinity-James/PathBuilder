@@ -7,13 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A3815C0261B165700E74F1A /* CodeGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3815BF261B165700E74F1A /* CodeGeneration.swift */; };
+		1AAD2AD325FF6E0800343A00 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AAD2AD225FF6E0800343A00 /* Helpers.swift */; };
+		1AE94705263558F8003E55C9 /* ModifierHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE94704263558F8003E55C9 /* ModifierHandling.swift */; };
 		1AF26F7425F639DD007A18FE /* SwiftUIPathsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF26F7325F639DD007A18FE /* SwiftUIPathsApp.swift */; };
 		1AF26F7625F639DD007A18FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF26F7525F639DD007A18FE /* ContentView.swift */; };
 		1AF26F7825F639DF007A18FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AF26F7725F639DF007A18FE /* Assets.xcassets */; };
 		1AF26F7B25F639DF007A18FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AF26F7A25F639DF007A18FE /* Preview Assets.xcassets */; };
+		1AF26F8525F63A28007A18FE /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF26F8425F63A28007A18FE /* DrawingView.swift */; };
+		1AFD052B2608B2D700F4C57C /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD052A2608B2D700F4C57C /* Drawing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A3815BF261B165700E74F1A /* CodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGeneration.swift; sourceTree = "<group>"; };
+		1AAD2AD225FF6E0800343A00 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		1AE94704263558F8003E55C9 /* ModifierHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierHandling.swift; sourceTree = "<group>"; };
 		1AF26F7025F639DD007A18FE /* SwiftUIPaths.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIPaths.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF26F7325F639DD007A18FE /* SwiftUIPathsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPathsApp.swift; sourceTree = "<group>"; };
 		1AF26F7525F639DD007A18FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -21,6 +29,8 @@
 		1AF26F7A25F639DF007A18FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1AF26F7C25F639DF007A18FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AF26F7D25F639DF007A18FE /* SwiftUIPaths.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUIPaths.entitlements; sourceTree = "<group>"; };
+		1AF26F8425F63A28007A18FE /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
+		1AFD052A2608B2D700F4C57C /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +65,11 @@
 			children = (
 				1AF26F7325F639DD007A18FE /* SwiftUIPathsApp.swift */,
 				1AF26F7525F639DD007A18FE /* ContentView.swift */,
+				1AE94704263558F8003E55C9 /* ModifierHandling.swift */,
+				1AF26F8425F63A28007A18FE /* DrawingView.swift */,
+				1AFD052A2608B2D700F4C57C /* Drawing.swift */,
+				1A3815BF261B165700E74F1A /* CodeGeneration.swift */,
+				1AAD2AD225FF6E0800343A00 /* Helpers.swift */,
 				1AF26F7725F639DF007A18FE /* Assets.xcassets */,
 				1AF26F7C25F639DF007A18FE /* Info.plist */,
 				1AF26F7D25F639DF007A18FE /* SwiftUIPaths.entitlements */,
@@ -142,6 +157,11 @@
 			files = (
 				1AF26F7625F639DD007A18FE /* ContentView.swift in Sources */,
 				1AF26F7425F639DD007A18FE /* SwiftUIPathsApp.swift in Sources */,
+				1A3815C0261B165700E74F1A /* CodeGeneration.swift in Sources */,
+				1AF26F8525F63A28007A18FE /* DrawingView.swift in Sources */,
+				1AE94705263558F8003E55C9 /* ModifierHandling.swift in Sources */,
+				1AAD2AD325FF6E0800343A00 /* Helpers.swift in Sources */,
+				1AFD052B2608B2D700F4C57C /* Drawing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
