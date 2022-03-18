@@ -16,6 +16,11 @@ public struct DrawingView: View {
 	public var body: some View {
 		ZStack(alignment: .topLeading) {
 			Color.white
+			if let grid = drawing.grid {
+				Grid(grid: grid)
+					.stroke(lineWidth: 1)
+					.foregroundColor(Color(white: 0.9))
+			}
 			liveDrawing.path.stroke(Color.black, lineWidth: 4)
 			Points(drawing: Binding(get: { liveDrawing }, set: { drawing = $0 }))
 		}
@@ -65,10 +70,10 @@ private struct Points: View {
 			let drawControlPoints = isSelected || (drawing.selection.isEmpty && index == drawing.elements.endIndex - 1)
 			let onClick = { shiftPressed in drawing.select(elementID, shiftPressed: shiftPressed) }
 			let move = { (to: CGPoint) in
-				if !drawing.selection.contains(elementID) { drawing.select(elementID, shiftPressed: false) }
-				drawing.move(elementID, to: to)
+				let amount = to - element.point
+				drawing.move(by: amount, snap: true)
 			}
-			PathPoint(element: $drawing.elements[index], isSelected: isSelected, drawControlPoints: drawControlPoints, onClick: onClick, move: move)
+			PathPoint(element: $drawing.elements[index], isSelected: isSelected, drawControlPoints: drawControlPoints, grid: drawing.grid, onClick: onClick, move: move)
 		}
 	}
 }
@@ -78,6 +83,7 @@ private struct PathPoint: View {
 	@Binding var element: Drawing.Element
 	let isSelected: Bool
 	let drawControlPoints: Bool
+	var grid: CGSize?
 	let onClick: (_ shiftPressed: Bool) -> ()
 	let move: (_ to: CGPoint) -> ()
 
@@ -92,8 +98,8 @@ private struct PathPoint: View {
 			}
 			.stroke(Color.gray)
 
-			controlPoint(at: controlPoints.0) { element.moveControlPoint1(to: $0, modifier: $1) }
-			controlPoint(at: controlPoints.1) { element.moveControlPoint2(to: $0, modifier: $1) }
+			controlPoint(at: controlPoints.0) { element.moveControlPoint1(to: $0, grid: grid, modifier: $1) }
+			controlPoint(at: controlPoints.1) { element.moveControlPoint2(to: $0, grid: grid, modifier: $1) }
 		}
 
 		pathPoint(at: element.point)

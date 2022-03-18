@@ -11,6 +11,7 @@ import SwiftUI
 public struct Drawing {
 	public var elements: [Element] = []
 	public var selection: Set<Drawing.Element.ID> = []
+	public var grid: CGSize? = CGSize(width: 50, height: 50)
 }
 
 //  MARK: Element
@@ -37,27 +38,31 @@ public extension Drawing.Element {
 		return (primary, secondary)
 	}
 
-	mutating func move(to: CGPoint) {
-		let delta = to - point
-		point = to
+	mutating func move(to: CGPoint, grid: CGSize?) {
+		var dest = to
+		if let grid = grid { dest.snap(to: grid) }
+		let delta = dest - point
+		point = dest
 		_primaryPoint = _primaryPoint.map { $0 + delta }
 		secondaryPoint = secondaryPoint.map { $0 + delta }
 	}
 
-	mutating func move(by delta: CGPoint) {
-		move(to: point + delta)
+	mutating func move(by delta: CGPoint, grid: CGSize?) {
+		move(to: point + delta, grid: grid)
 	}
 
-	mutating func moveControlPoint1(to: CGPoint, modifier: Bool) {
-		if modifier || _primaryPoint != nil { _primaryPoint = to }
-		else {
-			secondaryPoint = to.mirrored(relativeTo: point)
-		}
+	mutating func moveControlPoint1(to: CGPoint, grid: CGSize?, modifier: Bool) {
+		var dest = to
+		if let grid = grid { dest.snap(to: grid) }
+		if modifier || _primaryPoint != nil { _primaryPoint = dest }
+		else { secondaryPoint = dest.mirrored(relativeTo: point) }
 	}
 
-	mutating func moveControlPoint2(to: CGPoint, modifier: Bool) {
+	mutating func moveControlPoint2(to: CGPoint, grid: CGSize?, modifier: Bool) {
+		var dest = to
+		if let grid = grid { dest.snap(to: grid) }
 		if modifier && _primaryPoint == nil { _primaryPoint = primaryPoint }
-		secondaryPoint = to
+		secondaryPoint = dest
 	}
 
 	mutating func resetControlPoints() {
@@ -98,7 +103,13 @@ public extension Drawing {
 public extension Drawing {
 	mutating func update(for state: DragGesture.Value) {
 		let isDrag = state.startLocation.distance(to: state.location) > 1
-		elements.append(Element(point: state.startLocation, secondaryPoint: isDrag ? state.location : nil))
+		var point = state.startLocation
+		var secondary = isDrag ? state.location : nil
+		if let grid = grid {
+			point.snap(to: grid)
+			secondary?.snap(to: grid)
+		}
+		elements.append(Element(point: point, secondaryPoint: secondary))
 	}
 
 	mutating func select(_ id: Element.ID, shiftPressed: Bool) {
@@ -114,16 +125,16 @@ public extension Drawing {
 		guard let elementInFocus = elements.first(where: { $0.id == id }) else { return }
 		let relative = to - elementInFocus.point
 		for id in selection {
-			self[id].move(by: relative)
+			self[id].move(by: relative, grid: grid)
 		}
 	}
 
-	mutating func move(by amount: CGPoint) {
+	mutating func move(by amount: CGPoint, snap: Bool) {
 			let indices = elements.indices.filter { idx in
 				selection.contains(elements[idx].id)
 			}
 			for idx in indices {
-				elements[idx].move(by: amount)
+				elements[idx].move(by: amount, grid: snap ? grid : nil)
 			}
 		}
 
@@ -142,7 +153,7 @@ public extension Drawing {
 		@unknown default:
 			break
 		}
-		move(by: point)
+		move(by: point, snap: false)
 	}
 
 	mutating func delete() {
@@ -155,6 +166,24 @@ public extension Drawing {
 		set {
 			let idx = elements.indices.first(where: { elements[$0].id == id })!
 			elements[idx] = newValue
+		}
+	}
+}
+
+//  MARK: CGPoint + Grid
+private extension CGPoint {
+	mutating func snap(to grid: CGSize) {
+		x.snap(to: grid.width)
+		y.snap(to: grid.height)
+	}
+}
+
+private extension CGFloat {
+	mutating func snap(to gridAxis: CGFloat) {
+		let threshold = gridAxis / 5
+		let modulo = truncatingRemainder(dividingBy: gridAxis)
+		if modulo < threshold || gridAxis - modulo < threshold {
+			self = (self / gridAxis).rounded() * gridAxis
 		}
 	}
 }
